@@ -1,0 +1,28 @@
+//导入
+@import "./src/assets/css/base.scss";
+//引用
+$abd: 12px;
+//混合
+@mixin ceshi($radius) {
+  border-radius: $radius;
+}
+//继承
+%ceshi2 {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+  //嵌套属性
+  font: {
+    family: fantasy;
+    weight: bold;
+  }
+}
+//嵌套
+div {
+  span {
+    color: $abc;
+    size: $abd;
+    @extend %ceshi2;
+    @include ceshi(10px);
+  }
+}
