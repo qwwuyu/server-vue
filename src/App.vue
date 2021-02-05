@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div style="position: fixed; width: 100%; height: 100%; background-color: rgba(0, 0, 0, .05); z-index: -1000;"></div>
+    <div
+      style="position: fixed; width: 100%; height: 100%; background-color: rgba(0, 0, 0, .05); z-index: -1000;"
+    ></div>
     <title-vue></title-vue>
     <div style="position: fixed; width: 100%;">
       <div class="content">
@@ -8,13 +10,13 @@
           <el-col :span="4" style="pointer-events:auto;">
             <div>
               <div>
-                <router-link :to="{name:'Card'}">Card</router-link>
+                <router-link :to="{ name: 'Card' }">Card</router-link>
               </div>
               <div>
-                <router-link :to="{name:'Flag'}">Flag</router-link>
+                <router-link :to="{ name: 'Flag' }">Flag</router-link>
               </div>
               <div>
-                <router-link :to="{name:'Note'}">Note</router-link>
+                <router-link :to="{ name: 'Note' }">Note</router-link>
               </div>
             </div>
           </el-col>
@@ -34,7 +36,7 @@
 <script>
 export default {
   name: "App"
-}
+};
 </script>
 
 <style lang="scss">

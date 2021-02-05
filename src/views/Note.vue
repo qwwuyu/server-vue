@@ -1,15 +1,9 @@
 <template>
-  <div>
-    Note
-  </div>
+  <div>Note</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

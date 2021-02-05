@@ -4,10 +4,11 @@ import Card from "../views/Card.vue";
 
 Vue.use(VueRouter);
 
-const routes = [{
-    path: '/',
+const routes = [
+  {
+    path: "/",
     redirect: {
-      name: 'Card'
+      name: "Card"
     }
   },
   {

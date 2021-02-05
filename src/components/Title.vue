@@ -9,12 +9,10 @@
 <script>
 export default {
   name: "Title",
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
