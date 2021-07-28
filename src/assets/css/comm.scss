@@ -1,0 +1,71 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+html {
+  background: #fff;
+  color: #333;
+}
+
+body {
+  font-size: 14px;
+  font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li {
+  list-style-type: none;
+}
+
+input,
+select,
+button,
+textarea {
+  font-size: 14px;
+  font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma;
+  vertical-align: middle;
+}
+
+img {
+  border: none;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+//////////////////////////
+.loginDialog>.el-dialog {
+  width: 80%;
+  max-width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .el-dialog__body {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+  }
+}
+
+.clickable {
+  color: #007fff;
+  cursor: pointer;
+}

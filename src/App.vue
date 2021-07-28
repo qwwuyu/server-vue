@@ -41,10 +41,7 @@ export default {
 
 <style lang="scss">
 @import "./src/assets/css/base.scss";
-* {
-  padding: 0px;
-  margin: 0px;
-}
+@import "./src/assets/css/comm.scss";
 .content {
   padding-top: $title-height + 16px;
   max-width: $content-width;

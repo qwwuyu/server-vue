@@ -15,7 +15,10 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.component("titleVue", titleVue);
 
+import store from "./store";
+
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
