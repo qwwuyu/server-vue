@@ -12,6 +12,8 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.15.0",
     "es6-promise": "^4.2.8",
+    "js-base64": "^3.6.1",
+    "js-cookie": "^3.0.0",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

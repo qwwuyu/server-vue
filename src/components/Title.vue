@@ -4,12 +4,14 @@
       <div class="header-mask-bg" :style="cssProps"></div>
       <div class="header-content">
         <span class="header-log" data-unselectable="我就打打酱油..."></span>
-        <div class="header-anth" v-if="$store.getters['login/getLogin']">
-          <ul>
-            <li>
-              <span v-text="$store.state.login.nick"></span>
-            </li>
-          </ul>
+        <div v-if="$store.getters['login/getLogin']" style="float: right;">
+          <el-dropdown @command="handleCommand" placement="bottom">
+            <span class="header-info" v-text="$store.state.login.info.nick" />
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="empty">暂未开放</el-dropdown-item>
+              <el-dropdown-item command="logout">注销</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
         <div v-else class="header-anth">
           <ul>
@@ -30,7 +32,6 @@
       max-width="270px"
       :title="isDialogLogin ? '登录' : '注册'"
       :visible.sync="loginDialog"
-      :before-close="handleClose"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :destroy-on-close="true"
@@ -103,6 +104,11 @@ export default {
     },
     forget() {
       this.$message("请联系管理员");
+    },
+    handleCommand(command) {
+      if ("logout" == command) {
+        this.$store.commit("login/logout");
+      }
     }
   }
 };
@@ -168,6 +174,38 @@ export default {
 
   span:hover {
     background-color: rgba(255, 255, 255, 0.24);
+  }
+}
+
+.header-info {
+  height: $title-height;
+  line-height: $title-height;
+  cursor: pointer;
+  color: #fff;
+  padding: 0 12px;
+  max-width: 100px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.header-info:hover {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+.el-dropdown-menu {
+  padding: 0px;
+  margin-top: 2px;
+
+  .el-dropdown-menu__item {
+    padding: 0 24px;
+  }
+  /deep/ .popper__arrow {
+    border-bottom-color: #1ebef4 !important;
+    left: 50% !important;
+    visibility: hidden;
   }
 }
 

@@ -46,7 +46,12 @@ a:active {
 }
 
 //////////////////////////
-.loginDialog>.el-dialog {
+.clickable {
+  color: #007fff;
+  cursor: pointer;
+}
+
+.loginDialog > .el-dialog {
   width: 80%;
   max-width: 320px;
 
@@ -63,9 +68,4 @@ a:active {
     overflow: auto;
     padding: 20px;
   }
-}
-
-.clickable {
-  color: #007fff;
-  cursor: pointer;
 }
