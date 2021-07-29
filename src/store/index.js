@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 let store = new Vuex.Store({
   modules: {
-    login: login
+    eventLogin: login
   }
 });
 

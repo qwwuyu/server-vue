@@ -14,25 +14,26 @@ if ("string" == typeof token) {
 export default {
   namespaced: true, // 带命名空间，相当于这个模块中的内容是独立的
   state: {
-    login: isLogin,
-    info: loginInfo
+    dLogin: isLogin,
+    dInfo: loginInfo
   },
   mutations: {
-    login(state, token) {
+    mLogin(state, token) {
       Cookies.set("token", token, {
         expires: 7 * 86400
       });
-      state.login = true;
-      state.info = JSON.parse(Base64.decode(token));
+      state.dLogin = true;
+      state.dInfo = JSON.parse(Base64.decode(token));
     },
-    logout(state) {
-      state.login = false;
-      state.info = {};
+    mLogout(state) {
+      Cookies.remove("token");
+      state.dLogin = false;
+      state.dInfo = {};
     }
   },
   getters: {
     getLogin(state) {
-      return state.login;
+      return state.dLogin;
     }
   }
 };

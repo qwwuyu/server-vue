@@ -4,9 +4,12 @@
       <div class="header-mask-bg" :style="cssProps"></div>
       <div class="header-content">
         <span class="header-log" data-unselectable="我就打打酱油..."></span>
-        <div v-if="$store.getters['login/getLogin']" style="float: right;">
+        <div v-if="$store.getters['eventLogin/getLogin']" style="float: right;">
           <el-dropdown @command="handleCommand" placement="bottom">
-            <span class="header-info" v-text="$store.state.login.info.nick" />
+            <span
+              class="header-info"
+              v-text="$store.state.eventLogin.dInfo.nick"
+            />
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="empty">暂未开放</el-dropdown-item>
               <el-dropdown-item command="logout">注销</el-dropdown-item>
@@ -25,89 +28,35 @@
         </div>
       </div>
     </div>
-
-    <el-dialog
-      class="loginDialog"
-      width="80%"
-      max-width="270px"
-      :title="isDialogLogin ? '登录' : '注册'"
-      :visible.sync="loginDialog"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :destroy-on-close="true"
-    >
-      <div>
-        <form>
-          <el-input v-model="acc" maxlength="20" placeholder="帐号" />
-          <el-input
-            v-model="nick"
-            maxlength="20"
-            placeholder="昵称"
-            v-show="!isDialogLogin"
-          />
-          <el-input
-            v-model="pwd"
-            maxlength="20"
-            placeholder="密码"
-            show-password
-          />
-          <el-input
-            v-model="pwd2"
-            maxlength="20"
-            placeholder="确认密码"
-            show-password
-            v-show="!isDialogLogin"
-          />
-
-          <div class="login-fun">
-            <span style="color: #8b9196;">没有账号？</span>
-            <span
-              class="clickable"
-              v-text="isDialogLogin ? '注册' : '登录'"
-              @click="isDialogLogin = !isDialogLogin"
-            />
-            <a class="clickable forget" @click="forget">忘记密码</a>
-          </div>
-        </form>
-      </div>
-    </el-dialog>
+    <login-dialog ref="login"></login-dialog>
   </div>
 </template>
 
 <script>
+import LoginDialog from "@/components/LoginDialog.vue";
+
 export default {
   name: "Title",
   data() {
     return {
       cssProps: {
         backgroundImage: `url(${require("@/assets/img/head_bg.png")})`
-      },
-      loginDialog: false,
-      isDialogLogin: false,
-      acc: "",
-      nick: "",
-      pwd: "",
-      pwd2: ""
+      }
     };
   },
+  components: {
+    "login-dialog": LoginDialog
+  },
   methods: {
-    changeLogin() {
-      this.$store.commit("login/changeLogin", true);
-    },
     showLogin() {
-      this.loginDialog = true;
-      this.isDialogLogin = true;
+      this.$refs.login.showLogin();
     },
     showRegister() {
-      this.loginDialog = true;
-      this.isDialogLogin = false;
-    },
-    forget() {
-      this.$message("请联系管理员");
+      this.$refs.login.showRegister();
     },
     handleCommand(command) {
       if ("logout" == command) {
-        this.$store.commit("login/logout");
+        this.$store.commit("eventLogin/mLogout");
       }
     }
   }
@@ -206,20 +155,6 @@ export default {
     border-bottom-color: #1ebef4 !important;
     left: 50% !important;
     visibility: hidden;
-  }
-}
-
-.loginDialog {
-  .el-input {
-    margin-bottom: 6px;
-  }
-
-  .login-fun {
-    margin: 12px 0 0;
-
-    .forget {
-      float: right;
-    }
   }
 }
 </style>

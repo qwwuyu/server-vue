@@ -7,9 +7,8 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import titleVue from "./components/Title.vue";
 
-import Axios from "axios";
-Vue.prototype.$axios = Axios;
-Axios.defaults.baseURL = "http://localhost/";
+import defaultAxios from "./net.js";
+Vue.prototype.$axios = defaultAxios;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
