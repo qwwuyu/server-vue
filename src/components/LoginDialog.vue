@@ -2,8 +2,6 @@
   <div>
     <el-dialog
       class="login-dialog"
-      width="80%"
-      max-width="270px"
       v-if="isShowDialog"
       :visible.sync="isShowDialog"
       :title="isLogin ? '登录' : '注册'"
@@ -87,8 +85,8 @@ function rsaEncrypt(str) {
   const JSEncrypt = require("jsencrypt").default;
   var encrypt = new JSEncrypt();
   encrypt.setPublicKey(
-    "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCOVmjkpQZsb3F8TYz/M9W3ltco5tGnrktIlTvV9c4w+b5kbt+qMKnbKl11Y4Rk0w706AnnZO+9" +
-      "jW8w3snWhJVrJ9wxwJq+rBZJvn8Egi6npXFehRyOEO5lZYIWLNHHN6mB7QIOcQQMGblH0/A6SQdt1LStGuoZ7n2hEcI2V0/cyQIDAQAB"
+    // eslint-disable-next-line max-len
+    "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCOVmjkpQZsb3F8TYz/M9W3ltco5tGnrktIlTvV9c4w+b5kbt+qMKnbKl11Y4Rk0w706AnnZO+9jW8w3snWhJVrJ9wxwJq+rBZJvn8Egi6npXFehRyOEO5lZYIWLNHHN6mB7QIOcQQMGblH0/A6SQdt1LStGuoZ7n2hEcI2V0/cyQIDAQAB"
   );
   return encrypt.encrypt(str);
 }
@@ -202,6 +200,27 @@ export default {
 
     .dis-click {
       pointer-events: none;
+    }
+  }
+}
+
+::v-deep {
+  .login-dialog > .el-dialog {
+    width: 80%;
+    max-width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .el-dialog__body {
+      flex: 1;
+      overflow: auto;
+      padding: 20px;
     }
   }
 }

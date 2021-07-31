@@ -5,9 +5,15 @@ let loginInfo = {};
 let isLogin = false;
 let token = Cookies.get("token");
 if ("string" == typeof token) {
-  isLogin = true;
-  loginInfo = JSON.parse(Base64.decode(token));
-} else {
+  try {
+    loginInfo = JSON.parse(Base64.decode(token));
+    if (!loginInfo.id) throw new Error();
+    isLogin = true;
+  } catch (err) {
+    loginInfo = {};
+  }
+}
+if (!isLogin) {
   Cookies.remove("token");
 }
 
@@ -15,7 +21,8 @@ export default {
   namespaced: true, // 带命名空间，相当于这个模块中的内容是独立的
   state: {
     dLogin: isLogin,
-    dInfo: loginInfo
+    dInfo: loginInfo,
+    dToken: token
   },
   mutations: {
     mLogin(state, token) {
@@ -24,6 +31,7 @@ export default {
       });
       state.dLogin = true;
       state.dInfo = JSON.parse(Base64.decode(token));
+      state.dToken = token;
     },
     mLogout(state) {
       Cookies.remove("token");

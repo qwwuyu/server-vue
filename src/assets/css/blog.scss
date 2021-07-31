@@ -1,0 +1,105 @@
+.content-main {
+  background-color: #fff;
+}
+
+.main-page {
+  padding: 10px 0px;
+  width: 100%;
+  background-color: #f5f7fa;
+  outline: 1px solid #e7e9eb;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.page-send {
+  cursor: pointer;
+  color: #2d64b3;
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.main-content li {
+  height: 49px;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #e7e9eb;
+}
+
+.main-content-click {
+  display: block;
+  height: 49px;
+  cursor: pointer;
+}
+
+.main-content-click:hover {
+  background: #F7F7F7;
+}
+
+.main-content-title {
+  display: block;
+  margin: 0px 12px;
+  color: #333;
+  font-size: 15px;
+  padding: 3px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main-content-info {
+  color: #909090;
+  font-size: 12px;
+  margin-left: 12px;
+}
+
+.main-content-rm {
+  cursor: pointer;
+  color: #2d64b3;
+  font-size: 12px;
+  float: right;
+  margin-right: 12px;
+}
+
+::v-deep {
+  .el-pagination.is-background .el-pager li {
+    /*对页数的样式进行修改*/
+    background-color: #00000000;
+    color: #2d64b3;
+  }
+
+  .el-pagination.is-background .btn-next {
+    /*对下一页的按钮样式进行修改*/
+    background-color: #00000000;
+    color: #2d64b3;
+  }
+
+  .el-pagination.is-background .btn-next:disabled {
+    /*对下一页的按钮样式进行修改*/
+    color: #C0C4CC;
+  }
+
+  .el-pagination.is-background .btn-prev {
+    /*对上一页的按钮样式进行修改*/
+    background-color: #00000000;
+    color: #2d64b3;
+  }
+
+  .el-pagination.is-background .btn-prev:disabled {
+    /*对上一页的按钮样式进行修改*/
+    color: #C0C4CC;
+  }
+
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+    /*当前选中页数的样式进行修改*/
+    background-color: #00000000;
+    color: #C0C4CC;
+  }
+
+  .el-pagination.is-background .el-pagination__total {
+    font-size: 12px;
+  }
+}

@@ -16,6 +16,9 @@ Vue.component("titleVue", titleVue);
 
 import store from "./store";
 
+import util from "./util.js";
+Vue.prototype.$util = util;
+
 new Vue({
   router,
   store,
