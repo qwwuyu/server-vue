@@ -11,7 +11,12 @@
               v-text="$store.state.eventLogin.dInfo.nick"
             />
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="empty">暂未开放</el-dropdown-item>
+              <el-dropdown-item command="file" v-if="isShowFile()"
+                >文件管理器</el-dropdown-item
+              >
+              <el-dropdown-item command="blog" v-if="isShowBLog()"
+                >Blog</el-dropdown-item
+              >
               <el-dropdown-item command="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -57,7 +62,23 @@ export default {
     handleCommand(command) {
       if ("logout" == command) {
         this.$store.commit("eventLogin/mLogout");
+      } else if ("file" == command) {
+        this.$router.push({ name: "File" });
+      } else if ("blog" == command) {
+        this.$router.push({ name: "Blog" });
       }
+    },
+    isShowFile() {
+      return (
+        this.$route.name != "File" &&
+        this.$store.state.eventLogin.dInfo.auth >= 5
+      );
+    },
+    isShowBLog() {
+      return (
+        this.$route.name == "File" &&
+        this.$store.state.eventLogin.dInfo.auth >= 5
+      );
     }
   }
 };

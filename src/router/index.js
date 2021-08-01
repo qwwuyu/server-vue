@@ -14,35 +14,44 @@ const routes = [
   },
   {
     path: "/",
-    redirect: {
-      name: "Blog"
-    }
-  },
-  {
-    path: "/blog",
-    name: "Blog",
+    component: Layout,
     redirect: {
       name: "Card"
     },
-    component: Layout,
     children: [
       {
-        path: "card",
-        name: "Card",
-        meta: { title: "Card" },
-        component: () => import("../views/Card.vue")
+        path: "file",
+        name: "File",
+        meta: { title: "File" },
+        component: () => import("../views/File.vue")
       },
       {
-        path: "flag",
-        name: "Flag",
-        meta: { title: "Flag" },
-        component: () => import("../views/Flag.vue")
-      },
-      {
-        path: "note",
-        name: "Note",
-        meta: { title: "Note" },
-        component: () => import("../views/Note.vue")
+        path: "/blog",
+        name: "Blog",
+        component: () => import("../components/Blog.vue"),
+        redirect: {
+          name: "Card"
+        },
+        children: [
+          {
+            path: "card",
+            name: "Card",
+            meta: { title: "Card" },
+            component: () => import("../views/blog/Card.vue")
+          },
+          {
+            path: "flag",
+            name: "Flag",
+            meta: { title: "Flag" },
+            component: () => import("../views/blog/Flag.vue")
+          },
+          {
+            path: "note",
+            name: "Note",
+            meta: { title: "Note" },
+            component: () => import("../views/blog/Note.vue")
+          }
+        ]
       }
     ]
   },
