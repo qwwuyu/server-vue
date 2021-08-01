@@ -16,17 +16,19 @@
       </div>
       <div class="main-content">
         <ul>
-          <li v-for="data in datas" :key="data.id" style="overflow: hidden;">
-            <span class="main-content-title" v-text="data.title" />
-            <span class="main-content-info" v-text="data.nick" />
-            <span class="main-content-info" v-text="handleTime(data.time)" />
-            <span
-              class="main-content-rm"
-              :id="data.id"
-              v-if="$store.state.eventLogin.dInfo.id == data.userId"
-              @click="rm"
-              >删除</span
-            >
+          <li class="content-item" v-for="data in datas" :key="data.id">
+            <span class="content-title" v-text="data.title" />
+            <div class="content-info">
+              <span class="info-text" v-text="data.nick" />
+              <span class="info-text" v-text="handleTime(data.time)" />
+              <span
+                class="content-rm"
+                :id="data.id"
+                v-if="$store.state.eventLogin.dInfo.id == data.userId"
+                @click="rm"
+                >删除</span
+              >
+            </div>
           </li>
         </ul>
       </div>
@@ -175,6 +177,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/assets/css/base.scss";
 @import "./src/assets/css/blog.scss";
 </style>
+
+<style lang="scss"></style>

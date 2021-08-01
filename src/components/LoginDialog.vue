@@ -184,8 +184,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/assets/css/base.scss";
-
 .login-dialog {
   .el-input {
     margin-bottom: 6px;

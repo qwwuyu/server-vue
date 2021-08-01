@@ -45,8 +45,24 @@ a:active {
   text-decoration: none;
 }
 
-//////////////////////////
+/* */
+
 .clickable {
   color: #007fff;
   cursor: pointer;
+}
+
+.el-message-box {
+  width: 420px;
+  max-width: 80%;
+}
+
+.el-message {
+  width: 360px;
+  min-width: 0px;
+  max-width: 80%;
+}
+
+.el-menu--collapse{
+  max-width: 100%;
 }

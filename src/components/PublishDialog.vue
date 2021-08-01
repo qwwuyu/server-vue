@@ -77,7 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/assets/css/base.scss";
 .publish-content {
   margin-top: 20px;
 }

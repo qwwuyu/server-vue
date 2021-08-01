@@ -12,23 +12,39 @@
           :background="isBackground"
           style="padding:0px;"
         ></el-pagination>
-        <span class="page-send" @click="showPublish" v-if="isAuth">发布</span>
+        <span
+          class="page-send"
+          @click="showPublish"
+          v-if="this.$store.state.eventLogin.dInfo.auth >= 5"
+          >发布</span
+        >
       </div>
       <div class="main-content">
-        <ul>
-          <li v-for="data in datas" :key="data.id" style="overflow: hidden;">
-            <span class="main-content-title" v-text="data.title" />
-            <span class="main-content-info" v-text="data.nick" />
-            <span class="main-content-info" v-text="handleTime(data.time)" />
-            <span
-              class="main-content-rm"
-              :id="data.id"
-              v-if="$store.state.eventLogin.dInfo.id == data.userId"
-              @click="rm"
-              >删除</span
-            >
-          </li>
-        </ul>
+        <el-collapse accordion>
+          <el-collapse-item
+            v-for="data in datas"
+            :key="data.id"
+            style="overflow: hidden;"
+          >
+            <template slot="title">
+              <div class="content-item">
+                <span class="content-title" v-text="data.title" />
+                <div class="content-info">
+                  <span class="info-text" v-text="data.nick" />
+                  <span class="info-text" v-text="handleTime(data.time)" />
+                  <span
+                    class="content-rm"
+                    :id="data.id"
+                    v-if="$store.state.eventLogin.dInfo.id == data.userId"
+                    @click.stop="rm"
+                    >删除</span
+                  >
+                </div>
+              </div>
+            </template>
+            <span style="white-space: pre-line" v-text="data.content"></span>
+          </el-collapse-item>
+        </el-collapse>
       </div>
     </div>
     <publish-dialog
@@ -48,7 +64,6 @@ export default {
     return {
       isSmall: true,
       isBackground: true,
-      isAuth: this.$store.state.eventLogin.dInfo.auth >= 5,
       currentPage: 1,
       mCount: 0,
       sysTime: 1,
@@ -177,6 +192,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/assets/css/base.scss";
 @import "./src/assets/css/blog.scss";
+
+.content-item {
+  height: 49px;
+  border-bottom: 0;
+}
+
+::v-deep {
+  .el-collapse-item__header {
+    height: 49px;
+    line-height: 49px;
+  }
+
+  .el-icon-arrow-right {
+    margin: 0 8px 0 0px;
+  }
+
+  .el-collapse-item__content {
+    padding: 10px 12px;
+  }
+}
 </style>
