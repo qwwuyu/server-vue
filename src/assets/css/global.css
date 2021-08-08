@@ -52,6 +52,21 @@ a:active {
   cursor: pointer;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.ml24 {
+  margin-left: 24px;
+}
+
+.ml12 {
+  margin-left: 12px;
+}
+
+/* */
+
 .el-message-box {
   width: 420px;
   max-width: 80%;

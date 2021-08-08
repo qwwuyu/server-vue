@@ -12,7 +12,12 @@
           :background="isBackground"
           style="padding:0px;"
         ></el-pagination>
-        <span class="page-send" @click="showPublish">发布</span>
+        <span
+          class="page-send"
+          @click="showPublish"
+          v-if="this.$store.state.eventLogin.dInfo.auth >= 5"
+          >发布</span
+        >
       </div>
       <div class="main-content">
         <ul>
