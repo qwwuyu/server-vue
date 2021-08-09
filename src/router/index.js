@@ -14,6 +14,13 @@ const routes = [
     hidden: true
   },
   {
+    path: "/video",
+    name: "video",
+    meta: { title: "video" },
+    component: () => import("../views/Video.vue"),
+    hidden: true
+  },
+  {
     path: "/",
     component: Layout,
     redirect: {
