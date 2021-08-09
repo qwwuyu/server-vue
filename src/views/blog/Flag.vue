@@ -86,19 +86,19 @@ export default {
             this.mCount = data.data.count;
             this.sysTime = data.data.sysTime;
             this.datas = data.data.datas;
-          } else if (typeof data.info != "undefined") {
-            this.$message(data.info);
+          } else if (data.info) {
+            this.$util.err(data.info);
           }
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.$util.err(error.msg);
         });
     },
     showPublish() {
       if (this.$store.getters["eventLogin/getLogin"]) {
         this.$refs.publish.show();
       } else {
-        this.$message("请先登录");
+        this.$util.msg("请先登录");
       }
     },
     publish(title) {
@@ -106,13 +106,12 @@ export default {
         !new RegExp(".{1,50}").test(title) ||
         !new RegExp(".*[\\S]+.*").test(title)
       ) {
-        this.$message("内容不能为空");
+        this.$util.msg("内容不能为空");
         return;
       }
       this.$axios({
         url: "/i/flag/send",
         data: {
-          token: this.$store.state.eventLogin.dToken,
           title: title
         },
         before: () => {
@@ -122,18 +121,15 @@ export default {
         .then(response => {
           const data = response.data;
           if (1 == data.state) {
-            this.$message({
-              message: "发布成功",
-              type: "success"
-            });
+            this.$util.msg("发布成功");
             this.$refs.publish.close();
             this.requestData();
-          } else if (typeof data.info != "undefined") {
-            this.$message(data.info);
+          } else if (data.info) {
+            this.$util.err(data.info);
           }
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.$util.err(error.msg);
         })
         .finally(() => {
           this.$refs.publish.disCommit();

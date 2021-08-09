@@ -43,7 +43,31 @@ Date.prototype.format = function(format) {
   return format;
 };
 
+import { Notification } from "element-ui";
+import { Message } from "element-ui";
+const msg = msg => {
+  Message.info({
+    message: msg
+  });
+};
+const suc = msg => {
+  Notification.success({
+    title: msg,
+    showClose: false
+  });
+};
+const err = msg => {
+  Notification.error({
+    title: msg,
+    showClose: false,
+    position: "top-left"
+  });
+};
+
 const util = {};
 util.showTime = showTime;
+util.msg = msg;
+util.suc = suc;
+util.err = err;
 
 export default util;

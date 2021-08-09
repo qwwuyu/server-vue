@@ -1,18 +1,16 @@
 <template>
   <div class="content">
-    <el-button
-      type="text"
-      style="padding:9px 12px;"
-      @click="$refs.fileInput.click()"
-      >点击上传</el-button
+    <el-upload
+      class="content-upload"
+      :action="`${$axios.defaults.baseURL}ad/file/upload`"
+      multiple
+      :data="{ path: this.path }"
+      :with-credentials="true"
+      :on-success="handleUploadSuc"
+      :on-error="handleUploadErr"
     >
-    <input
-      @change="selectFile"
-      ref="fileInput"
-      type="file"
-      multiple="multiple"
-      style="display: none;"
-    />
+      <el-button type="text" style="padding:9px 12px;">点击上传</el-button>
+    </el-upload>
     <div style="height: 1px; width: 100%; background-color: #ccc;" />
     <div class="content-title">
       <el-breadcrumb separator="/" style="padding: 0px 9px;">
@@ -21,7 +19,7 @@
             v-if="data.path != ''"
             :href="'/file?path=' + data.path"
             @click.prevent="folder"
-            :data="data.path"
+            :data-path="data.path"
             >{{ data.name }}</a
           >
           <template v-else>{{ data.name }}</template>
@@ -34,6 +32,7 @@
         v-if="!dataList.length && pathList.length > 1"
         >删除</span
       >
+      <span class="dir-ctrl" @click="requestData">刷新</span>
       <span style="flex: 1;" />
       <span class="dir-ctrl" @click="checkDownloadFile">检测下载</span>
       <span class="dir-ctrl" @click="downloadFile">下载网络文件</span>
@@ -44,13 +43,13 @@
       <li
         v-for="data in dataList"
         :key="data.name"
-        :set="(fullPath = path + '/' + data.name)"
+        :set="(fullPath = `${path}/${data.name}`)"
       >
         <a
           v-if="data.dir"
           class="file-folder flex-center"
-          :href="'/file?path=' + fullPath"
-          :data="fullPath"
+          :href="`/file?path=${fullPath}`"
+          :data-path="fullPath"
           @click.prevent="folder"
         >
           <i class="ion-icon el-icon-folder"></i>
@@ -63,16 +62,20 @@
         <div v-if="!data.dir" class="flex-center file-ctrl">
           <a
             class="file-open ml12"
-            :href="'/ad/file/open?path=' + fullPath"
+            :href="`${$axios.defaults.baseURL}ad/file/open?path=${fullPath}`"
             target="_blank"
             >打开</a
           >
           <a
             class="file-download ml24"
-            :href="'/ad/file/download?path=' + fullPath"
+            :href="
+              `${$axios.defaults.baseURL}ad/file/download?path=${fullPath}`
+            "
             >下载</a
           >
-          <span class="file-delete ml24" @click="del(fullPath)">删除</span>
+          <span class="file-delete ml24" :data-path="fullPath" @click="delFile"
+            >删除</span
+          >
           <span class="file-date ml24" v-text="data.date" />
           <span class="file-info ml24" v-text="data.info" />
         </div>
@@ -94,7 +97,37 @@ export default {
       dataList: []
     };
   },
+  // computed: {
+  //   dInfo() {
+  //     return this.$store.state.eventLogin.dInfo;
+  //   }
+  // },
+  // watch: {
+  //   dInfo: {
+  //     handler: function(val) {
+  //       if (!val.auth || val.auth < 5) {
+  //         this.$router.push({ name: "Blog" });
+  //       }
+  //     },
+  //     immediate: true
+  //   }
+  // },
   created: function() {
+    const dInfo = this.$store.state.eventLogin.dInfo;
+    if (!dInfo.auth || dInfo.auth < 5) {
+      this.$router.push({ name: "Blog" });
+      return;
+    }
+    this.$store.watch(
+      () => {
+        return this.$store.state.eventLogin.dInfo;
+      },
+      val => {
+        if (!val.auth || val.auth < 5) {
+          this.$router.push({ name: "Blog" });
+        }
+      }
+    );
     this.path = this.$route.query.path;
     if (typeof this.path != "string" || this.path == "") {
       this.path = "";
@@ -129,7 +162,6 @@ export default {
       this.$axios({
         url: "/ad/file/query",
         data: {
-          token: this.$store.state.eventLogin.dToken,
           path: this.path
         }
       })
@@ -137,19 +169,22 @@ export default {
           const data = response.data;
           if (1 == data.state) {
             this.dataList = data.data;
-          } else if (typeof data.info != "undefined") {
-            this.$message(data.info);
+          } else if (data.info) {
+            this.dataList = [];
+            this.$util.err(data.info);
           }
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.dataList = [];
+          this.$util.err(error.msg);
         });
     },
     folder(e) {
-      this.path = e.currentTarget.getAttribute("data");
+      this.path = e.currentTarget.getAttribute("data-path");
       this.handlePath();
     },
-    del(fullPath) {
+    delFile(e) {
+      const fullPath = e.currentTarget.getAttribute("data-path");
       this.$confirm("确定要删除" + fullPath + "?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -158,21 +193,20 @@ export default {
         this.$axios({
           url: "/ad/file/delete",
           data: {
-            token: this.$store.state.eventLogin.dToken,
             path: this.fullPath
           }
         })
           .then(response => {
             const data = response.data;
             if (1 == data.state) {
-              this.$message({ message: "删除成功", type: "success" });
+              this.$util.msg("删除成功");
               this.requestData();
             } else if (data.info) {
-              this.$message(data.info);
+              this.$util.err(data.info);
             }
           })
           .catch(error => {
-            this.$message(error.msg);
+            this.$util.err(error.msg);
           });
       });
     },
@@ -185,22 +219,21 @@ export default {
         this.$axios({
           url: "/ad/file/deleteDir",
           data: {
-            token: this.$store.state.eventLogin.dToken,
             path: this.path
           }
         })
           .then(response => {
             const data = response.data;
             if (1 == data.state) {
-              this.$message({ message: "删除成功", type: "success" });
+              this.$util.msg("删除成功");
               this.path = this.pathList[this.pathList.length - 2].path;
               this.handlePath();
             } else if (data.info) {
-              this.$message(data.info);
+              this.$util.err(data.info);
             }
           })
           .catch(error => {
-            this.$message(error.msg);
+            this.$util.err(error.msg);
           });
       });
     },
@@ -210,7 +243,6 @@ export default {
         this.$axios({
           url: "/ad/file/createDir",
           data: {
-            token: this.$store.state.eventLogin.dToken,
             path: this.path,
             dirName: word
           }
@@ -218,14 +250,14 @@ export default {
           .then(response => {
             const data = response.data;
             if (1 == data.state) {
-              this.$message({ message: "创建成功", type: "success" });
+              this.$util.msg("创建成功");
               this.requestData();
-            } else if (typeof data.info != "undefined") {
-              this.$message(data.info);
+            } else if (data.info) {
+              this.$util.err(data.info);
             }
           })
           .catch(error => {
-            this.$message(error.msg);
+            this.$util.err(error.msg);
           });
       }
     },
@@ -235,7 +267,6 @@ export default {
         this.$axios({
           url: "/ad/file/downloadFile",
           data: {
-            token: this.$store.state.eventLogin.dToken,
             path: this.path,
             downloadUrl: word
           }
@@ -243,16 +274,16 @@ export default {
           .then(response => {
             const data = response.data;
             if (1 == data.state) {
-              this.$message({ message: data.info, type: "success" });
+              this.$util.suc(data.info);
               this.requestData();
             } else if (data.state == 2) {
-              this.$message({ message: data.info, type: "success" });
-            } else if (typeof data.info != "undefined") {
-              this.$message(data.info);
+              this.$util.msg(data.info);
+            } else if (data.info) {
+              this.$util.err(data.info);
             }
           })
           .catch(error => {
-            this.$message(error.msg);
+            this.$util.err(error.msg);
           });
       }
     },
@@ -266,18 +297,25 @@ export default {
         .then(response => {
           const data = response.data;
           if (1 == data.state) {
-            this.$message({ message: data.info, type: "success" });
-          } else if (typeof data.info != "undefined") {
-            this.$message(data.info);
+            this.$util.suc(data.info);
+          } else if (data.info) {
+            this.$util.err(data.info);
           }
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.$util.err(error.msg);
         });
     },
-    selectFile() {
-      var fileList = this.$refs.fileInput.files;
-      console.log(fileList);
+    handleUploadSuc(response) {
+      if (1 == response.state) {
+        this.$util.suc(response.data);
+      } else if (response.data) {
+        this.$util.err(response.data);
+      }
+      this.requestData();
+    },
+    handleUploadErr(err, file) {
+      this.$util.err(`上传失败：${file.name}`);
     }
   }
 };
@@ -285,6 +323,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/assets/css/base.scss";
+
+::v-deep {
+  .el-upload-list__item {
+    margin-top: 0;
+  }
+}
+
 .content {
   display: block;
   padding-top: $title-height;

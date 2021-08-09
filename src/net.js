@@ -4,6 +4,7 @@ const defaultAxios = Axios.create({
   timeout: 5000,
   method: "post",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  withCredentials: true,
   transformRequest: [
     data => {
       let formData = new FormData();
@@ -31,10 +32,14 @@ defaultAxios.interceptors.response.use(
   },
   function(error) {
     if (error.response) {
-      if (404 == error.response.status) {
+      if (error.response.data && error.response.data.info) {
+        error.msg = error.response.data.info;
+      } else if (404 == error.response.status) {
         error.msg = "请求的地址不存在";
       } else if (504 == error.response.status) {
         error.msg = "服务器连接超时";
+      } else if (401 == error.response.status) {
+        error.msg = "认证失败";
       } else {
         error.msg = "请求数据失败";
       }

@@ -113,7 +113,7 @@ export default {
       this.isLogin = false;
     },
     forget() {
-      this.$message("请联系管理员");
+      this.$util.msg("请联系管理员");
     },
     commit() {
       if (this.isLogin) this.login();
@@ -136,7 +136,7 @@ export default {
           this.handLogin(response.data);
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.$util.msg(error.msg);
         })
         .finally(() => {
           this.isCommiting = false;
@@ -161,7 +161,7 @@ export default {
           this.handLogin(response.data);
         })
         .catch(error => {
-          this.$message(error.msg);
+          this.$util.msg(error.msg);
         })
         .finally(() => {
           this.isCommiting = false;
@@ -172,8 +172,8 @@ export default {
         this.$store.commit("eventLogin/mLogin", data.data);
         this.isShowDialog = false;
         this.closeDialog();
-      } else if (typeof data.info != "undefined") {
-        this.$message(data.info);
+      } else if (data.info) {
+        this.$util.msg(data.info);
       }
     },
     closeDialog() {
