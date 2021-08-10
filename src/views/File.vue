@@ -62,7 +62,7 @@
         <div v-if="!data.dir" class="flex-center file-ctrl">
           <a
             class="file-open ml12"
-            :href="`${$axios.defaults.baseURL}ad/file/open?path=${fullPath}`"
+            :href="handleOpenUrl(fullPath)"
             target="_blank"
             >打开</a
           >
@@ -305,6 +305,13 @@ export default {
         .catch(error => {
           this.$util.err(error.msg);
         });
+    },
+    handleOpenUrl(fullPath) {
+      if (fullPath.substr(-4, 4).toLowerCase() == ".mp4") {
+        return `/open/video?path=${fullPath}`;
+      } else {
+        return `${this.$axios.defaults.baseURL}ad/file/open?path=${fullPath}`;
+      }
     },
     handleUploadSuc(response) {
       if (1 == response.state) {

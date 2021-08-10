@@ -17,6 +17,9 @@
               <el-dropdown-item command="blog" v-if="isShowBLog()"
                 >Blog</el-dropdown-item
               >
+              <el-dropdown-item command="java" v-if="isShowJava()"
+                >Java</el-dropdown-item
+              >
               <el-dropdown-item command="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -64,6 +67,8 @@ export default {
         this.$store.commit("eventLogin/mLogout");
       } else if ("file" == command) {
         this.$router.push({ name: "File" });
+      } else if ("java" == command) {
+        this.$router.push({ name: "Java" });
       } else if ("blog" == command) {
         this.$router.push({ name: "Blog" });
       }
@@ -74,9 +79,15 @@ export default {
         this.$store.state.eventLogin.dInfo.auth >= 5
       );
     },
+    isShowJava() {
+      return (
+        this.$route.name != "Java" &&
+        this.$store.state.eventLogin.dInfo.auth >= 5
+      );
+    },
     isShowBLog() {
       return (
-        this.$route.name == "File" &&
+        (this.$route.name == "File" || this.$route.name == "Java") &&
         this.$store.state.eventLogin.dInfo.auth >= 5
       );
     }

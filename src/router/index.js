@@ -14,7 +14,7 @@ const routes = [
     hidden: true
   },
   {
-    path: "/video",
+    path: "/open/video",
     name: "video",
     meta: { title: "video" },
     component: () => import("../views/Video.vue"),
@@ -32,6 +32,13 @@ const routes = [
         name: "File",
         meta: { title: "File" },
         component: () => import("../views/File.vue")
+      },
+      {
+        path: "/code/java",
+        name: "Java",
+        meta: { title: "java" },
+        component: () => import("../views/code/Java.vue"),
+        hidden: true
       },
       {
         path: "/blog",

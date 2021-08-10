@@ -11,14 +11,14 @@ import titleVue from "./components/Title.vue";
 import defaultAxios from "./net.js";
 Vue.prototype.$axios = defaultAxios;
 
+import util from "./util.js";
+Vue.prototype.$util = util;
+
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.component("titleVue", titleVue);
 
 import store from "./store";
-
-import util from "./util.js";
-Vue.prototype.$util = util;
 
 new Vue({
   router,
