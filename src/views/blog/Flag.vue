@@ -75,7 +75,7 @@ export default {
     },
     requestData() {
       this.$axios({
-        url: "/i/flag/get",
+        url: "/i/blog/flag/get",
         data: {
           page: this.currentPage
         }
@@ -110,7 +110,7 @@ export default {
         return;
       }
       this.$axios({
-        url: "/i/flag/send",
+        url: "/i/blog/flag/send",
         data: {
           title: title
         },

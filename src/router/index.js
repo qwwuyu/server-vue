@@ -10,8 +10,13 @@ const routes = [
     path: "/404",
     name: "notFound",
     meta: { title: "页面找不到" },
-    component: () => import("../views/404.vue"),
-    hidden: true
+    component: () => import("../views/404.vue")
+  },
+  {
+    path: "/500",
+    name: "serverError",
+    meta: { title: "服务器未知错误" },
+    component: () => import("../views/500.vue")
   },
   {
     path: "/open/video",
@@ -72,9 +77,8 @@ const routes = [
   },
   {
     path: "*",
-    redirect: {
-      name: "notFound"
-    }
+    meta: { title: "页面找不到" },
+    component: () => import("../views/404.vue")
   }
 ];
 

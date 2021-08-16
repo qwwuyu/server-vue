@@ -3,7 +3,7 @@
     <form
       target="_blank"
       accept-charset="UTF-8"
-      :action="`${$axios.defaults.baseURL}java/result`"
+      :action="`${$axios.defaults.baseURL}/i/java/result`"
       method="post"
     >
       <div class="in-coder-panel">

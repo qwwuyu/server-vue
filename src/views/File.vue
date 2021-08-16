@@ -2,7 +2,7 @@
   <div class="content">
     <el-upload
       class="content-upload"
-      :action="`${$axios.defaults.baseURL}ad/file/upload`"
+      :action="`${$axios.defaults.baseURL}/i/file/upload`"
       multiple
       :data="{ path: this.path }"
       :with-credentials="true"
@@ -69,7 +69,7 @@
           <a
             class="file-download ml24"
             :href="
-              `${$axios.defaults.baseURL}ad/file/download?path=${fullPath}`
+              `${$axios.defaults.baseURL}/i/file/download?path=${fullPath}`
             "
             >下载</a
           >
@@ -160,7 +160,7 @@ export default {
     },
     requestData() {
       this.$axios({
-        url: "/ad/file/query",
+        url: "/i/file/query",
         data: {
           path: this.path
         }
@@ -191,7 +191,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.$axios({
-          url: "/ad/file/delete",
+          url: "/i/file/delete",
           data: {
             path: this.fullPath
           }
@@ -217,7 +217,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.$axios({
-          url: "/ad/file/deleteDir",
+          url: "/i/file/deleteDir",
           data: {
             path: this.path
           }
@@ -241,7 +241,7 @@ export default {
       var word = prompt("输入文件夹名称");
       if (word && "" != word) {
         this.$axios({
-          url: "/ad/file/createDir",
+          url: "/i/file/createDir",
           data: {
             path: this.path,
             dirName: word
@@ -265,7 +265,7 @@ export default {
       var word = prompt("输入下载地址");
       if (word && "" != word) {
         this.$axios({
-          url: "/ad/file/downloadFile",
+          url: "/i/file/downloadFile",
           data: {
             path: this.path,
             downloadUrl: word
@@ -289,9 +289,7 @@ export default {
     },
     checkDownloadFile() {
       this.$axios({
-        url:
-          "/ad/file/checkDownloadFile?token=" +
-          this.$store.state.eventLogin.dToken,
+        url: "/i/file/checkDownloadFile",
         method: "get"
       })
         .then(response => {
@@ -310,7 +308,7 @@ export default {
       if (fullPath.substr(-4, 4).toLowerCase() == ".mp4") {
         return `/open/video?path=${fullPath}`;
       } else {
-        return `${this.$axios.defaults.baseURL}ad/file/open?path=${fullPath}`;
+        return `${this.$axios.defaults.baseURL}/i/file/open?path=${fullPath}`;
       }
     },
     handleUploadSuc(response) {

@@ -8,7 +8,7 @@
       controls
     >
       <source ref="source" :src="src" />
-      <!-- src="http://localhost:8080/ad/file/download?path=/files/test.mp4" -->
+      <!-- src="http://localhost:8080/i/file/download?path=/files/test.mp4" -->
     </video>
   </div>
 </template>
@@ -21,7 +21,7 @@ video.addLanguage("zh-CN", videoZH);
 export default {
   data() {
     return {
-      src: `${this.$axios.defaults.baseURL}ad/file/download?path=${this.$route.query.path}`
+      src: `${this.$axios.defaults.baseURL}/i/file/download?path=${this.$route.query.path}`
     };
   },
   mounted() {

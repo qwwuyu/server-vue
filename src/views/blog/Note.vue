@@ -97,7 +97,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.$axios({
-          url: "/i/note/rm",
+          url: "/i/blog/note/rm",
           data: {
             id: id
           }
@@ -118,7 +118,7 @@ export default {
     },
     requestData() {
       this.$axios({
-        url: "/i/note/get",
+        url: "/i/blog/note/get",
         data: {
           page: this.currentPage
         }
@@ -153,7 +153,7 @@ export default {
         return;
       }
       this.$axios({
-        url: "/i/note/send",
+        url: "/i/blog/note/send",
         data: {
           title: title,
           content: content

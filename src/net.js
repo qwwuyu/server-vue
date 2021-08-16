@@ -1,6 +1,6 @@
 import Axios from "axios";
 const defaultAxios = Axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000,
   method: "post",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },

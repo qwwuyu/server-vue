@@ -123,7 +123,7 @@ export default {
       if (!check(this, this.acc, "aa", this.pwd, this.pwd)) return;
       let pwd = bcrypt(this.acc, this.pwd);
       this.$axios({
-        url: "/i/login",
+        url: "/i/auth/login",
         data: {
           acc: this.acc,
           pwd: pwd
@@ -147,7 +147,7 @@ export default {
       if (!check(this, this.acc, nick, this.pwd, this.pwd2)) return;
       let pwd = rsaEncrypt(this.pwd);
       this.$axios({
-        url: "/i/register",
+        url: "/i/auth/register",
         data: {
           acc: this.acc,
           pwd: pwd,

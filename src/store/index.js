@@ -18,7 +18,7 @@ if (store.getters["eventLogin/getLogin"]) {
 
 function checkLogin() {
   axios({
-    url: "/i/checkToken",
+    url: "/i/auth/checkToken",
     data: {
       token: store.state.eventLogin.dToken
     }
