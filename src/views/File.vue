@@ -76,7 +76,7 @@
           <span class="file-delete ml24" :data-path="fullPath" @click="delFile"
             >删除</span
           >
-          <span class="file-date ml24" v-text="data.date" />
+          <span class="file-date ml24" v-text="handleTime(data.time)" />
           <span class="file-info ml24" v-text="data.info" />
         </div>
       </li>
@@ -182,6 +182,9 @@ export default {
     folder(e) {
       this.path = e.currentTarget.getAttribute("data-path");
       this.handlePath();
+    },
+    handleTime(time) {
+      return this.$util.showTime(this.sysTime, time);
     },
     delFile(e) {
       const fullPath = e.currentTarget.getAttribute("data-path");
