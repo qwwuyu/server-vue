@@ -73,6 +73,12 @@
             "
             >下载</a
           >
+          <a
+            class="file-download ml24"
+            :href="handleShareUrl(fullPath, data.md5)"
+            target="_blank"
+            >分享</a
+          >
           <span class="file-delete ml24" :data-path="fullPath" @click="delFile"
             >删除</span
           >
@@ -313,6 +319,9 @@ export default {
       } else {
         return `${this.$axios.defaults.baseURL}/i/file/open?path=${fullPath}`;
       }
+    },
+    handleShareUrl(fullPath, md5) {
+      return `${this.$axios.defaults.baseURL}/i/file/open?path=/${md5}${fullPath}`;
     },
     handleUploadSuc(response) {
       if (1 == response.state) {
