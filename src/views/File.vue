@@ -43,13 +43,13 @@
       <li
         v-for="data in dataList"
         :key="data.name"
-        :set="(hFullPath = `${path}/${data.name}`)"
+        :set="(_fullPath = `${path}/${data.name}`)"
       >
         <a
           v-if="data.dir"
           class="file-folder flex-center"
-          :href="`/file?path=${hFullPath}`"
-          :data-path="hFullPath"
+          :href="`/file?path=${_fullPath}`"
+          :data-path="_fullPath"
           @click.prevent="folder"
         >
           <i class="ion-icon el-icon-folder"></i>
@@ -62,24 +62,24 @@
         <div v-if="!data.dir" class="flex-center file-ctrl">
           <a
             class="file-open ml12"
-            :href="handleOpenUrl(hFullPath)"
+            :href="handleOpenUrl(_fullPath)"
             target="_blank"
             >打开</a
           >
           <a
             class="file-download ml24"
             :href="
-              `${$axios.defaults.baseURL}/i/file/download?path=${hFullPath}`
+              `${$axios.defaults.baseURL}/i/file/download?path=${_fullPath}`
             "
             >下载</a
           >
           <a
             class="file-download ml24"
-            :href="handleShareUrl(hFullPath, data.md5)"
+            :href="handleShareUrl(_fullPath, data.md5)"
             target="_blank"
             >分享</a
           >
-          <span class="file-delete ml24" :data-path="hFullPath" @click="delFile"
+          <span class="file-delete ml24" :data-path="_fullPath" @click="delFile"
             >删除</span
           >
           <span class="file-date ml24" v-text="handleTime(data.time)" />
